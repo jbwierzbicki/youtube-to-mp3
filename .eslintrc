@@ -9,6 +9,6 @@
     "prettier"
   ],
   "rules": {
-    "prettier/prettier": 2
+    "no-control-regex": 0
   }
 }

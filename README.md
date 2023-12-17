@@ -1,34 +1,57 @@
-# Simple TypeScript Starter | 2023
+# YouTube Downloader with TypeScript
 
-### Features
+This script allows you to download individual YouTube videos or entire playlists and convert them to MP3 format using TypeScript. It utilizes `ytdl-core` for downloading videos, `ytpl` for handling playlists, and `fluent-ffmpeg` for conversion to MP3.
 
-- Minimal
-- TypeScript v5
-- Linting with Eslint and Prettier
-- Local development with Nodemon
+## Prerequisites
 
-### Scripts
+- Node.js installed on your machine or use fnm/nvm.
+- pnpm or yarn to manage dependencies.
+- TypeScript compiler (`typescript`) installed globally or available as a dev dependency.
 
-#### `pnpm install`
+## Installation
 
-Install packages
+1. Clone this repository.
+2. Install dependencies using pnpm or yarn:
 
-#### `pnpm run dev`
+   ```bash
+   pnpm install
+   ```
 
-Starts the application in development using `nodemon` and `ts-node` to do hot reloading.
+   or
 
-#### `pnpm run start`
+   ```bash
+   yarn install
+   ```
 
-Starts the app in production by first building the project with `pnpm run build`, and then executing the compiled JavaScript at `dist/index.js`.
+## Usage
 
-#### `pnpm run build`
+Run the script using `pnpm` | `yarn`:
 
-Builds the app at `build`, cleaning the folder first.
+```bash
+pnpm download --video <video_id> --output <output_folder>
+```
 
-#### `pnpm run format`
+Replace <video_id> or <playlist_id> with the respective YouTube video ID or playlist ID you want to download. Use --output followed by the desired output folder path where the downloaded files will be saved.
 
-Format your code.
+> ##### Available Commands:
 
-#### `pnpm run lint`
+```bash
+--video <video_id>: Downloads a single video by its ID.
+--playlist <playlist_id>: Downloads all videos from a playlist by its ID.
+--output <output_folder>: Specifies the output folder to save the downloaded files.
 
-Lint your code.
+```
+
+## Examples:
+
+To download a single video:
+
+```bash
+pnpm download --video <video_id> --output ./downloads
+```
+
+To download a playlist:
+
+```bash
+pnpm download --playlist <playlist_id> --output ./downloads
+```
