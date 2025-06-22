@@ -1,4 +1,4 @@
-import ytdl from 'ytdl-core';
+import ytdl from '@distube/ytdl-core';
 import ytpl from 'ytpl';
 import ffmpeg from 'fluent-ffmpeg';
 import fs from 'fs';
@@ -9,8 +9,10 @@ async function downloadVideoById(videoId: string, outputPath?: string) {
   const videoTitle = videoInfo.videoDetails.title.replace(/[^\x00-\x7F]/g, ''); // Remove non-ASCII characters
   const audioReadableStream = ytdl(videoId, { filter: 'audioonly' });
 
-  const outputDir = outputPath ? `${outputPath}/${videoTitle}` : videoTitle;
-  const filePath = `${outputDir}.mp3`;
+  // Create a safe filename by removing invalid characters
+  const safeTitle = videoTitle.replace(/[<>:"/\\|?*]/g, '_');
+  const fileName = `${safeTitle}.mp3`;
+  const filePath = outputPath ? `${outputPath}/${fileName}` : fileName;
 
   if (outputPath && !fs.existsSync(outputPath)) {
     fs.mkdirSync(outputPath, { recursive: true });
@@ -35,7 +37,7 @@ async function downloadVideoById(videoId: string, outputPath?: string) {
     ffmpeg()
       .input(audioReadableStream)
       .audioCodec('libmp3lame')
-      .on('end', resolve)
+      .on('end', (stdout: string | null, stderr: string | null) => resolve())
       .on('error', reject)
       .save(filePath);
   });
